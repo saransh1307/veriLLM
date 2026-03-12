@@ -25,12 +25,12 @@ flowchart TD
     classDef process fill:#f9f9f9,stroke:#666,stroke-width:1px;
 
     %% Nodes
-    A[Salesforce Production\n(Real Data with PII)]:::prod
+    A["Salesforce Production\n(Real Data with PII)"]:::prod
     
     subgraph Microsegmented Docker Network
         direction TB
-        B[Python Pipeline\nWorker]:::security
-        C((Local LLM Engine\nOllama Llama 3)):::security
+        B["Python Pipeline\nWorker"]:::security
+        C(["Local LLM Engine\nOllama Llama 3"]):::security
         
         B -- "Sends unstructured text" --> C
         C -- "Returns synthetic text" --> B
@@ -38,7 +38,7 @@ flowchart TD
         note1[All data processed entirely in RAM]
     end
     
-    D[Salesforce Sandbox\n(Safe Fake Data)]:::sandbox
+    D["Salesforce Sandbox\n(Safe Fake Data)"]:::sandbox
 
     %% Connections
     A -- "1. Extract JSON Payload" --> B
