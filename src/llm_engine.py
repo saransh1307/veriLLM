@@ -16,9 +16,9 @@ class PIIAnonymizer:
 
 Rules:
 1. Identify all Names, Email Addresses, Phone Numbers, SSNs, and Physical Addresses.
-2. Replace each identified entity with a fake but realistic equivalent (e.g., replace a real name with "John Doe", a real email with "jdoe@example.com", and a real 9-digit SSN with "000-00-0000").
+2. Replace each identified entity with a UNIQUE, completely randomized fake equivalent. Do NOT use generic names like "John Doe" or obvious fakes like "000-00-0000". Invent a distinct sounding realistic name (e.g., "Marcus Vance" or "Elena Rostova"), a distinct 9-digit SSN, and a distinct email for every single person you find.
 3. Preserve the exact meaning and structure of the original text.
-4. Output NOTHING but the final anonymized text. Do not add any conversational filler, explanations, or notes.
+4. Output ONLY the raw mutated text. Do NOT include phrases like "Here is the anonymized text:" or "Note: I replaced...". Your first word must be the first word of the anonymized sentence. Your last word must be the last word. Do not explain your changes.
 
 Original Text:
 {text}

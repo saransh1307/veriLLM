@@ -18,31 +18,25 @@ The following flowchart illustrates how target data moves from the Production en
 
 ```mermaid
 flowchart TD
-    %% Define styles
-    classDef prod fill:#ffcccc,stroke:#cc0000,stroke-width:2px;
-    classDef security fill:#e6f3ff,stroke:#0066cc,stroke-width:2px;
-    classDef sandbox fill:#ccffcc,stroke:#009933,stroke-width:2px;
-    classDef process fill:#f9f9f9,stroke:#666,stroke-width:1px;
+    %% Define subtle, accessible styles
+    classDef minimal fill:#f8f9fa,stroke:#ced4da,stroke-width:2px,color:#212529;
+    classDef step fill:#ffffff,stroke:#adb5bd,stroke-width:1px,color:#212529;
 
-    %% Nodes
-    A["Salesforce Production\n(Real Data with PII)"]:::prod
+    A["🏢 Real Business Systems\n(Contains actual customer information)"]:::minimal
     
-    subgraph Microsegmented Docker Network
+    subgraph Pipeline["🤖 Secure AI Pipeline"]
         direction TB
-        B["Python Pipeline\nWorker"]:::security
-        C(["Local LLM Engine\nOllama Llama 3"]):::security
+        S1["🔍 AI Scans Text\n(Reads paragraphs and finds hidden personal info)"]:::step
+        S2["✍️ AI Generates Fakes\n(Replaces real names & numbers with realistic, fake ones)"]:::step
+        S3["📦 Packages Clean Data\n(Prepares the securely sanitized file)"]:::step
         
-        B -- "Sends unstructured text" --> C
-        C -- "Returns synthetic text" --> B
-        
-        note1[All data processed entirely in RAM]
+        S1 --> S2 --> S3
     end
     
-    D["Salesforce Sandbox\n(Safe Fake Data)"]:::sandbox
+    C["✅ Safe Testing Environment\n(Developers build features using safe data)"]:::minimal
 
-    %% Connections
-    A -- "1. Extract JSON Payload" --> B
-    B -- "2. Inject Safe JSON" --> D
+    A -- "1. Sends raw data" --> S1
+    S3 -- "2. Pushes safe data" --> C
 ```
 
 ## 🛠️ Tech Stack

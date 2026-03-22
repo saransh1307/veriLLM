@@ -2,6 +2,7 @@ import json
 import sys
 import os
 
+# this is mock generator for locally run the model
 # Add root directory to python path for testing
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
@@ -30,8 +31,7 @@ def run_test():
     
     mock_data = generate_mock_salesforce_data()
     
-    print("[!] Original Production Data (DANGER: CONTAINS PII):")
-    print(json.dumps(mock_data, indent=2))
+    print("[!] Extracting Original Production Data...")
     
     # Initialize the core pipeline
     try:
@@ -50,10 +50,16 @@ def run_test():
         # Run the sanitization process
         sanitized_data = pipeline.process_records(mock_data, fields_to_clean)
         
-        print("\n[+] Sanitized Sandbox Data (SAFE FOR DEVELOPMENT):")
-        print(json.dumps(sanitized_data, indent=2))
+        print("\n[+] Verification Review (Original vs. Masked):")
+        for i, record in enumerate(sanitized_data):
+            print(f"\n--- Record {i+1} ---")
+            orig_record = mock_data[i]
+            for field in fields_to_clean:
+                if field in record and field in orig_record:
+                    print(f"[{field} - ORIGINAL]:\n{orig_record[field]}")
+                    print(f"[{field} - MASKED]:\n{record[field]}\n")
         
-        print("\n--- Test Complete ---")
+        print("--- Test Complete ---")
     except Exception as e:
         print(f"\n[ERROR] Pipeline failed during execution: {e}")
         print("Ensure 'ollama run llama3' has been executed locally or via the docker container.")
